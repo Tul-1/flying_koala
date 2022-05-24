@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<html>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/401d508782.js" crossorigin="anonymous"></script>
+    <title>{{ user_req.username }} - Recipify!</title>
+    {% include "navbar.html" %}
+    <section class="hero is-primary">
+        <div class="hero-body">
+        <p class="title">{{ user_req.username }}</p>
+        <p class="subtitle">{{ amount }} recipe</p>
+        </div>
+    </section>
+    <section class="section">
+        {% include "recipe_cards.html" %}
+    </section>
+</html>

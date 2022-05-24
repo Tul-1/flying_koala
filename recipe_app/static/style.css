@@ -1,0 +1,31 @@
+h1 {
+    background-image: linear-gradient(to left, violet 14.2%, indigo 28.4%, blue 42.6%, green 56.8%, yellow 71%, orange 85.2%, red);
+    -webkit-background-clip: text;
+    background-clip: none;
+    color: transparent;
+    font-family: cursive, fantasy;
+}
+
+h3 {
+    color: crimson;
+    size: 20px;
+    font-family: cursive;
+}
+
+body {
+    color: black;
+    size: 10pt;
+    font-family: cursive;
+}
+
+p {
+    color: black;
+    size: 10pt;
+    font-family: cursive;
+}
+
+img {
+    border-style: solid;
+    border-width: 3px;
+    border-color: black;
+  }

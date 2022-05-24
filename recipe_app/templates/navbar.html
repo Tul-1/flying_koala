@@ -1,0 +1,75 @@
+<nav class="navbar is-light" role="navigation" aria-label="main navigation">
+
+    <div class="navbar-brand">
+        <a class="navbar-item" href="{% url 'home' %}">
+            <span class="icon-text">
+            <span class="icon is-large has-text-primary"><i class="fa-solid fa-utensils fa-xl"></i></span>
+            <span><h1 class="title has-text-primary">Recipify!</h1></span>
+            </span>
+        </a>
+  </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+        <div class="navbar-item">
+            <form action=/search/ method="POST">
+                {% csrf_token %}
+                <div class="field has-addons">
+                    <div class="control has-icons-left has-icons-right">
+                        <input type="text" class="input" placeholder="Enter words to search" id='keywords' name='keywords'>
+                        <span class="icon is-left">
+                            <i class="fa-solid fa-pencil"></i>
+                        </span>
+                    </div>
+                    <p class="control">
+                        <button class="button is-info" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    <div class="navbar-end">
+        <div class="navbar-item">
+        {% if request.user.is_authenticated %}
+        You are signed in as&nbsp;<strong>{{ request.user.username }}</strong>
+        {% else %}
+        You are not signed in
+        {% endif %}
+        </div>
+        <div class="navbar-item">
+          <div class="buttons">
+            {% if request.user.is_authenticated %}
+
+
+            <div class="dropdown is-hoverable">
+                <div class="dropdown-trigger">
+                    <a class="button is-link" aria-haspopup="true" aria-controls="dropdown-menu4" href="{% url 'profile' %}?username={{ request.user.username }}">
+                        <strong>Profile</strong>
+                    </a>
+                </div>
+                <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                    <div class="dropdown-content">
+                        <div class="dropdown-item">
+                            <p>{% include 'profile_card.html' %}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a class="button is-primary" href="{% url 'log_out' %}">
+                Logout
+            </a>
+            {% else %}
+            <a class="button is-primary" href="{% url 'signup_login' %}">
+                <strong>Sign up</strong>
+              </a>
+              <a class="button is-link" href="{% url 'signup_login' %}">
+                Log in
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+</nav>
