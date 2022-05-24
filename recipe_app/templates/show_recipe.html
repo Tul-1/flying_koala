@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/401d508782.js" crossorigin="anonymous"></script>
+    <title>{{ recipe_req.recipe_name }} - Recipify!</title>
+    {% include "navbar.html" %}
+    <section class="hero is-primary">
+        <div class="hero-body">
+        <p class="title">{{ recipe_req.recipe_name }}</p>
+        <p class="subtitle">{{ recipe_req.username }}</p>
+        </div>
+    </section>
+    <section class="section">
+        <div class="block">
+            <p class="is-italic">"{{ recipe_req.description }}"</p>
+            <p>
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fa-solid fa-user-group"></i>
+                    </span>
+                    <span>Serves {{ recipe_req.serves }}</span>
+                </span>
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fa-solid fa-hourglass"></i>
+                    </span>
+                    <span>{{ recipe_req.prep_time }} {% if recipe_req.prep_time == 1 %} minute {% else %} minutes {% endif %}</span>
+                </span>
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fas fa-pizza-slice"></i>
+                    </span>
+                    <span>Cuisine: {{ recipe_req.cuisine }}</span>
+                </span>
+            </p>
+        </div>
+
+        <div class="content">
+            <h3>Ingredients:</h3>
+            {% for ing in ings %}
+            <input type="checkbox">&nbsp;{{ ing }}<br>
+            {% endfor %}
+            <h3>Method:</h3>
+            {% for step in step_list %}
+            <p>{{ step }}</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="field is-grouped">
+            <p class="control">
+            {% if liked %}
+            <a href='/like?id={{ recipe_req.id }}' class="button is-danger is-light">
+            {% else %}
+            <a href='/like?id={{ recipe_req.id }}' class="button is-success is-light">
+            {% endif %}
+                {% if liked %}
+                Unlike
+                {% else %}
+                Like
+                {% endif %}
+                ({{ recipe_req.like_number }})
+            </a></p>
+            {% if request.user.username == recipe_req.username %}
+            <p class="control"><a class="button is-danger"href='/delete?id={{ recipe_req.id }}'>Delete</a></p>
+            {% endif %}
+            <p class="control"><a href='/' class="button">Homepage</a></p>
+        </div>
+    </section>
+</html>

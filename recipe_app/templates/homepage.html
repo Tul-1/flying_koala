@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/401d508782.js" crossorigin="anonymous"></script>
+    <title>Recipify!</title>
+{% include "navbar.html" %}
+
+    {% if s %}
+    <div class="section">
+        <div class="column is-5">
+            {% if s == 'success' %}
+            <article class="message is-success">
+                <div class="message-header">
+                    <p>Success!</p>
+                    <a class="delete" aria-label="delete" href="{% url 'home' %}"></a>
+                </div>
+                <div class="message-body">
+                    Your recipe was posted succesfully!
+                </div>
+            </article>
+            {% else %}
+            <article class="message is-danger">
+                <div class="message-header">
+                    <p>Fail!</p>
+                    <a class="delete" aria-label="delete" href="{% url 'home' %}"></a>
+                </div>
+                <div class="message-body">
+                    Your recipe was not posted!
+                </div>
+            </article>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <body>
+        <section class="section">
+            <p class="title is-4">Top 5 Recipes of the day:</p>
+            {% if recipes %}
+            {% include 'recipe_cards.html' %}
+            {% else %}
+            There are no recipes to display.
+            {% endif %}
+        </section>
+
+        <style>
+            .bm--textarea-equal-height {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+            .bm--textarea-equal-height .bm--card-footer-- {
+                margin-top: auto;
+            }
+        </style>
+        
+        {% if request.user.is_authenticated %}
+        <section class="section">
+            <form action=/send/ method="POST">
+                <div class="columns">
+                    <div class="column is-half">
+                        {% csrf_token %}
+                        <div class="field">
+                            <label for="name_txt" class="label">Recipe Name</label>
+                            <input type="text" id="name_txt" name="name_txt" class="input" placeholder="e.g. Tacos">
+                        </div>
+                        
+                        <div class="columns">
+                            <div class="column is-three-quarters">
+                                <div class="field">
+                                    <label for="description" class="label">Description</label>
+                                    <textarea style="min-height:144px;height:100%" id="description" name="description" class="textarea has-fixed-size" placeholder="e.g. Easy, quick tacos!"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="column">
+                                <div class="field">
+                                    <label for="serves" class="label">Serves</label>
+                                    <input type="number" id="serves" name="serves" min="1" class="input" placeholder="e.g. 4" value="4">
+                                </div>
+                                <div class="field">
+                                    <label for="prep" class="label">Prep Time (m)</label>
+                                    <input type="number" id="prep" name="prep" min="1" class="input" placeholder="e.g. 10" value="10">
+                                </div>
+                                <div class="field">
+                                    <label for="cuisine" class="label">Cuisine</label>
+                                    <input type="text" id="cuisine" name="cuisine" placeholder="e.g. Indian" class="input">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label for="ingredients" class="label">Ingredients
+                                <div class="dropdown is-hoverable">
+                                    <div class="dropdown-trigger">
+                                        <button class="button is-static is-small" aria-haspopup="true" aria-controls="dropdown-menu4">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-info" aria-hidden="true"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="dropdown-item">
+                                                <p>Put a space between the quantity and the ingredient. If there is no quantity, put '-'. For multiple word quantities use '-' between the words.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                            <textarea rows="10" cols="80" id="ingredients" name="ingredients" class="textarea has-fixed-size" placeholder="175g pack baby corn
+1-sliced-(190g) large red onion
+1-deseeded-and-roughly-chopped red pepper
+½-tsp cumin seeds
+2-tsp olive oil
+1-halved-lengthways-(110g) large ripe kiwi
+1-halved-(115g) large tomato
+100g wholemeal flour
+1 large garlic clove
+15g-chopped fresh coriander
+1-tsp vegan bouillon powder
+½-tsp smoked paprika
+85g finely shredded red cabbage"></textarea>
+                        </div>
+                    </div>
+                    <div class="column bm--textarea-equal-height">
+                        <div class="field">
+                            <label for="steps" class="label">Method</label>
+                            <textarea style="min-height:529px;height:100%" id="steps" name="steps" class="textarea has-fixed-size" placeholder="STEP 1
+Heat oven to 220C/200C fan/gas 7. Pile the corn, red onion and pepper into a large shallow roasting tin and toss with the cumin seeds and oil. Add the kiwi and tomato on one side of the tin and roast for 20 mins.
+
+STEP 2
+Meanwhile, mix 60ml water into the flour with the blade of a knife to make a dough. Knead briefly until smooth, then cut equally into four and roll out each piece on a lightly floured surface into a 16cm round tortilla. Cover with a tea towel to stop them drying out.
+
+STEP 3
+Remove the cooked tomato and kiwi from the tin and return the veg to the oven for 10 mins. Remove the skin from the kiwi and scoop the flesh into a bowl with the tomato, garlic, half the coriander, bouillon and paprika. Use a hand blender to blitz to a smooth salsa.
+
+STEP 4
+Heat a large non-stick frying pan, without oil, and cook the tortillas one at a time for a minute on one side and about 10 seconds on the other, until you see them puff up a little. Spread a tortilla with some salsa, top with cabbage and roasted veg, then scatter with the remaining coriander. Add a spoonful more salsa and eat with your hands."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column"></div>
+                <div class="column is-narrow"><input class="button is-primary is-large" type="submit" name="Send"></div>
+                </div>
+            </form>
+        </section>
+        {% else %}
+        <section class="section"><a class="button is-link is-light" href="{% url 'signup_login' %}"><strong>Sign up&nbsp</strong>or&nbsp<strong>login&nbsp</strong>to post a recipe</a></section>
+        {% endif %}
+
+    </body>

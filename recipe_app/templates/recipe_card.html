@@ -1,0 +1,53 @@
+<style>
+    .bm--card-equal-height {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    .bm--card-equal-height .bm--card-footer--top-section {
+        margin-top: auto;
+    }
+</style>
+<a href="/view?id={{ recipe.id }}">
+    <div class="card bm--card-equal-height">
+        <div class="card-content">
+            <div class="content">
+                <p class="title is-4">{{ recipe.recipe_name }}</p>
+                <p class="subtitle is-6">{{ recipe.username }}</p>
+            </div>
+            <div class="content">
+                <p>{{ recipe.description }}</p>
+            </div>
+        </div>
+    
+        <div class="card-footer bm--card-footer--top-section">
+            <p class="card-footer-item">
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fas fa-pizza-slice"></i>
+                    </span>
+                    <span>{{ recipe.cuisine }}</span>
+                </span>
+            </p>
+        </div>
+
+        <div class="card-footer">
+            <p class="card-footer-item">
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                    </span>
+                    <span>{{ recipe.like_number }}</span>
+                </span>
+            </p>
+            <p class="card-footer-item">
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fa-solid fa-hourglass"></i>
+                    </span>
+                    <span>{{ recipe.prep_time }}m</span>
+                </span>
+            </p>
+        </div>
+    </div>
+</a>

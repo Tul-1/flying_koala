@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/401d508782.js" crossorigin="anonymous"></script>
+    <title>Search resuts - Recipify!</title>
+    {% include 'navbar.html' %}
+    <section class="hero is-success">
+        <div class="hero-body">
+            <h1 class="title">Search results for '{{ keywords }}'</h1>
+            {% if amount == 1 %}
+            <h3 class="subtitle">{{ amount }} recipe found</h3>
+            {% else %}
+            <h3 class="subtitle">{{ amount }} recipes found</h3>
+            {% endif %}
+        </div>
+    </section>
+    <body>
+        {% if recipes %}
+                <section class="section">
+                {% include 'recipe_cards.html' %}
+                </section>
+        {% else %}
+        <section class="section">There are no recipes with your keywords.</section>
+        {% endif %}
+    </body>
+    <section class="section">
+        <p class="control"><a href='/' class="button">Homepage</a></p>
+    </section>
+</html>
