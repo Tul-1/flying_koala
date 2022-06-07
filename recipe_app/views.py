@@ -14,7 +14,7 @@ def home(request):
         s = None
     top_recipe_list = Recipe.objects.order_by('-like_number')[:5]
     #cuisines = [i.replace('+', ' ') for i in 'African American British Caribbean Chinese East+European French Greek Indian Irish Italian Japanese Korean Mexican Nordic North+African Pakistani Portuguese South+American Spanish Thai+and+South-European+Asian Turkish+and+Middle+Eastern Other'.split()]
-    context = {'recipes': top_recipe_list, 's':s}
+    context = {'recipes': top_recipe_list, 's':s, 'amount':len(Recipe.objects.filter(username=request.user.username))}
     return render(request, 'homepage.html', context)
 
 def insert_ingredient(ing):
@@ -68,9 +68,9 @@ def send(request):
 
 def signup_login(request):
     try:
-        context = {'get_return': request.GET['next']}
+        context = {'get_return': request.GET['next'], 'amount':len(Recipe.objects.filter(username=request.user.username))}
     except:
-        context = {'get_return': '/'}
+        context = {'get_return': '/', 'amount':len(Recipe.objects.filter(username=request.user.username))}
     return render(request, 'signup_login.html', context)
 
 def log_in(request):
@@ -126,7 +126,7 @@ def show_recipe(request):
         ing = Ingredient.objects.get(pk=i.ingredient.id)
         ingredients.append(f"{i.quantity.replace('-', ' ')} {ing.ingredient_name}")
 
-    context = {'recipe_req':recipe_req, 'step_list':step_list, 'liked':liked, 'ings':ingredients}
+    context = {'amount':len(Recipe.objects.filter(username=request.user.username)), 'recipe_req':recipe_req, 'step_list':step_list, 'liked':liked, 'ings':ingredients, 'amount':len(Recipe.objects.filter(username=request.user.username))}
     return render(request, 'show_recipe.html', context)
 
 def profile(request):
@@ -181,7 +181,7 @@ def search(request):
 
     results.sort(key=getLikeNum, reverse=True)
 
-    context = {'recipes':results, 'keywords':keywords, 'amount':len(results)}
+    context = {'recipes':results, 'keywords':keywords, 'amount':len(results), 'amount':len(Recipe.objects.filter(username=request.user.username))}
     return render(request, 'search_results.html', context)
 
 @login_required(login_url='/signin/')
