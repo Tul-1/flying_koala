@@ -8,7 +8,7 @@
     <section class="hero is-primary">
         <div class="hero-body">
         <p class="title">{{ user_req.username }}</p>
-        <p class="subtitle">{{ amount }} recipe</p>
+        <p class="subtitle">{{ amount }} {% if amount == 1 %} recipe {% else %} recipes {% endif %}</p>
         </div>
     </section>
     <section class="section">
