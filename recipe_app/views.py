@@ -168,6 +168,7 @@ def search(request):
     for keyword in keyword_list:
         results2 = list(Recipe.objects.filter(recipe_name__icontains=keyword))
         results2 += list(Recipe.objects.filter(description__icontains=keyword))
+        results2 += list(Recipe.objects.filter(cuisine__icontains=keyword))
         x = list(Ingredient.objects.filter(ingredient_name__icontains=keyword))
         for i in x:
             try:
@@ -181,7 +182,7 @@ def search(request):
 
     results.sort(key=getLikeNum, reverse=True)
 
-    context = {'recipes':results, 'keywords':keywords, 'amount':len(results), 'amount':len(Recipe.objects.filter(username=request.user.username))}
+    context = {'recipes':results, 'keywords':keywords, 'amount2':len(results), 'amount':len(Recipe.objects.filter(username=request.user.username))}
     return render(request, 'search_results.html', context)
 
 @login_required(login_url='/signin/')
