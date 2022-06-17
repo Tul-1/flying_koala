@@ -37,3 +37,10 @@ class Quantity(models.Model):
     def __str__(self):
         return f'{self.quantity} - {self.recipe.recipe_name} - {self.ingredient.ingredient_name}'
 
+class UserRecipeData(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    amount = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.amount)
+
