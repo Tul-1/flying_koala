@@ -23,6 +23,21 @@
         {% else %}
         <section class="section">There are no recipes with your keywords.</section>
         {% endif %}
+
+        {% if profiles %}
+                <section class="section">
+                <div class="columns">
+                {% for profile in profiles %}
+                <div class="column is-2">
+                {% include 'profile_card.html' %}
+                
+                </div>
+                {% endfor %}
+                </div>
+                </section>
+        {% else %}
+        <section class="section">There are no profiles with your keywords.</section>
+        {% endif %}
     </body>
     <section class="section">
         <p class="control"><a href='/' class="button">Homepage</a></p>

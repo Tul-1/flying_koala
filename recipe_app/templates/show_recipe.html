@@ -8,7 +8,7 @@
     <section class="hero is-primary">
         <div class="hero-body">
         <p class="title">{{ recipe_req.recipe_name }}</p>
-        <p class="subtitle">{{ recipe_req.username }}</p>
+        <p class="subtitle"><a class="is-underlined" href="/profile?username={{ recipe_req.username }}">{{ recipe_req.username }}</a></p>
         </div>
     </section>
     <section class="section">

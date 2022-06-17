@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Recipe, Ingredient, Quantity
+from .models import Recipe, Ingredient, Quantity, UserRecipeData
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -34,6 +34,10 @@ def insert_ingredient(ing):
 @login_required(login_url='/signin/')
 def send(request):
     logged_user = request.user
+
+    logged_user.userrecipedata.amount = logged_user.userrecipedata.amount + 1
+
+    print(logged_user.userrecipedata.amount)
 
     try:
         name = request.POST['name_txt']
@@ -94,6 +98,8 @@ def signup(request):
             return redirect(f'/signin?next={request.GET["next"]}')
 
     a = User.objects.create_user(username=usernam, password=passwor)
+    b = UserRecipeData(user=a, amount=0)
+    b.save()
     return log_in(request)
 
 def log_out(request):
@@ -182,7 +188,10 @@ def search(request):
 
     results.sort(key=getLikeNum, reverse=True)
 
-    context = {'recipes':results, 'keywords':keywords, 'amount2':len(results), 'amount':len(Recipe.objects.filter(username=request.user.username))}
+    for keyword in keyword_list:
+        results3 = list(User.objects.filter(username__icontains=keyword))
+
+    context = {'recipes':results, 'keywords':keywords, 'profiles':results3, 'amount2':len(results), 'amount':len(Recipe.objects.filter(username=request.user.username))}
     return render(request, 'search_results.html', context)
 
 @login_required(login_url='/signin/')

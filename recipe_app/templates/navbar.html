@@ -51,7 +51,26 @@
                 <div class="dropdown-menu" id="dropdown-menu4" role="menu">
                     <div class="dropdown-content">
                         <div class="dropdown-item">
-                            <p>{% include 'profile_card.html' %}</p>
+                            <p><a href="/profile?username={{ user.username }}">
+    <div class="card">
+        <div class="card-content">
+            <div class="content">
+                <p class="title is-4">{{ user.username }}</p>
+            </div>
+        </div>
+    
+        <div class="card-footer">
+            <p class="card-footer-item">
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fas fa-pizza-slice"></i>
+                    </span>
+                    <span>{{ user.userrecipedata.amount }} {% if user.userrecipedata.amount == 1 %} recipe {% else %} recipes {% endif %}</span>
+                </span>
+            </p>
+        </div>
+    </div>
+</a></p>
                         </div>
                     </div>
                 </div>
