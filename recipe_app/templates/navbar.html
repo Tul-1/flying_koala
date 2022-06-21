@@ -65,7 +65,7 @@
                     <span class="icon">
                         <i class="fas fa-pizza-slice"></i>
                     </span>
-                    <span>{% if user %}{{ user.userrecipedata.amount }} {% if user.userrecipedata.amount == 1 %} recipe {% else %} recipes {% endif %}{% endif %}</span>
+                    <span>{% if user.userrecipedata %}{{ user.userrecipedata.amount }} {% if user.userrecipedata.amount == 1 %} recipe {% else %} recipes {% endif %}{% endif %}</span>
                 </span>
             </p>
         </div>
