@@ -55,7 +55,7 @@
     <div class="card">
         <div class="card-content">
             <div class="content">
-                <p class="title is-4">{{ user.username }}</p>
+                <p class="title is-4">{{ request.user.username }}</p>
             </div>
         </div>
     
@@ -65,7 +65,7 @@
                     <span class="icon">
                         <i class="fas fa-pizza-slice"></i>
                     </span>
-                    <span>{% if user.userrecipedata %}{{ user.userrecipedata.amount }} {% if user.userrecipedata.amount == 1 %} recipe {% else %} recipes {% endif %}{% endif %}</span>
+                    <span>{% if request.user %}{{ request.user.userrecipedata.amount }} {% if request.user.userrecipedata.amount == 1 %} recipe {% else %} recipes {% endif %}{% endif %}</span>
                 </span>
             </p>
         </div>
