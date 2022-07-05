@@ -12,10 +12,7 @@
     <div class="card bm--card-equal-height">
         <div class="card-content">
             <div class="content">
-                <p class="title is-4">{{ profile.username }} {% if request.user.userrecipedata.amount %}
-                yeey
-                {% else %}no yeey
-                {% endif %}</p>
+                <p class="title is-4">{{ profile.username }}</p>
             </div>
         </div>
     
@@ -25,7 +22,7 @@
                     <span class="icon">
                         <i class="fas fa-pizza-slice"></i>
                     </span>
-                    <span>{{ request.user.userrecipedata.amount }} {% if user.userrecipedata.amount == 1 %} recipe {% else %} recipes {% endif %}</span>
+                    <span>{{ profile.userrecipedata.amount }} {% if profile.userrecipedata.amount == 1 %} recipe {% else %} recipes {% endif %}</span>
                 </span>
             </p>
         </div>

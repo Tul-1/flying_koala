@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from . import views
 
@@ -13,5 +15,6 @@ urlpatterns = [
     path('like/', views.like, name='like'),
     path('search/', views.search, name='search'),
     path('delete/', views.delete, name='delete'),
-    path('profile/', views.profile, name='profile')
-]
+    path('profile/', views.profile, name='profile'),
+    path('updatelog/', views.updatelog, name='updatelog')
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

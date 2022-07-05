@@ -19,6 +19,9 @@ class Recipe(models.Model):
     like_number = models.IntegerField(default=0)
     user_likes = models.ManyToManyField(User, related_name='user_likes')
 
+    #images (hmm)
+    photo = models.ImageField(upload_to='recipes/', blank=True)
+
     def __str__(self):
         return self.recipe_name
 
