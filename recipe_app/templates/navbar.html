@@ -32,7 +32,7 @@
     <div class="navbar-end">
         <div class="navbar-item">
         {% if request.user.is_authenticated %}
-        You are signed in as&nbsp;<strong>{{ request.user.username }}</strong>
+        You are signed in as&nbsp;<strong>{{ request.user.username }}</strong>{% if request.user.is_staff %}{% endif %}
         {% else %}
         You are not signed in
         {% endif %}
@@ -40,41 +40,11 @@
         <div class="navbar-item">
           <div class="buttons">
             {% if request.user.is_authenticated %}
-
-
-            <div class="dropdown is-hoverable">
-                <div class="dropdown-trigger">
-                    <a class="button is-link" aria-haspopup="true" aria-controls="dropdown-menu4" href="{% url 'profile' %}?username={{ request.user.username }}">
-                        <strong>Profile</strong>
-                    </a>
-                </div>
-                <div class="dropdown-menu" id="dropdown-menu4" role="menu">
-                    <div class="dropdown-content">
-                        <div class="dropdown-item">
-                            <p><a href="/profile?username={{ user.username }}">
-    <div class="card">
-        <div class="card-content">
-            <div class="content">
-                <p class="title is-4">{{ request.user.username }}</p>
-            </div>
-        </div>
-    
-        <div class="card-footer">
-            <p class="card-footer-item">
-                <span class="icon-text">
-                    <span class="icon">
-                        <i class="fas fa-pizza-slice"></i>
-                    </span>
-                    <span>{% if request.user %}{{ request.user.userrecipedata.amount }} {% if request.user.userrecipedata.amount == 1 %} recipe {% else %} recipes {% endif %}{% endif %}</span>
-                </span>
-            </p>
-        </div>
-    </div>
-</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% if request.user.is_staff %}
+            <a class="button is-danger" href="/updatelog">Update Log</a>
+            <a class="button is-warning" href="/admin">Admin</a>
+            {% endif %}
+            <a class="button is-link" href="/profile?username={{ request.user.username }}"><strong>Profile</strong></a>
 
             <a class="button is-primary" href="{% url 'log_out' %}">
                 Logout

@@ -6,6 +6,16 @@
     <title>Recipify!</title>
 {% include "navbar.html" %}
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5QSRDMWBNE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5QSRDMWBNE');
+</script>
+
     {% if s %}
     <div class="section">
         <div class="column is-5">
@@ -57,7 +67,7 @@
         
         {% if request.user.is_authenticated %}
         <section class="section">
-            <form action=/send/ method="POST">
+            <form enctype="multipart/form-data" action=/send/ method="POST">
                 <div class="columns">
                     <div class="column is-half">
                         {% csrf_token %}
@@ -72,7 +82,23 @@
                                     <label for="description" class="label">Description</label>
                                     <textarea style="min-height:144px;height:100%" id="description" name="description" class="textarea has-fixed-size" placeholder="e.g. Easy, quick tacos!"></textarea>
                                 </div>
+                                <div class="field">
+                                <input type="file" name="userimage" id="userimage" accept="image/*">
+                                </div>
                             </div>
+
+                            {% comment %} <script>
+                                const fileInput = document.querySelector('#file-js-example input[type=file]');
+                                fileInput.onchange = () => {
+                                    if (fileInput.files.length > 0) {
+                                    const fileName = document.querySelector('#file-js-example .file-name');
+                                    fileName.textContent = fileInput.files[0].name;
+                                    }
+                                }
+                                document.getElementById('filename').innerHTML = fileName;
+                                document.getElementById('fileinput').innerHTML = fileInput;
+
+                            </script> {% endcomment %}
 
                             <div class="column">
                                 <div class="field">
@@ -87,6 +113,7 @@
                                     <label for="cuisine" class="label">Cuisine</label>
                                     <input type="text" id="cuisine" name="cuisine" placeholder="e.g. Indian" class="input">
                                 </div>
+                                
                             </div>
                         </div>
 

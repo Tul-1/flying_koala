@@ -8,11 +8,18 @@
     <section class="hero is-success">
         <div class="hero-body">
             <h1 class="title">Search results for '{{ keywords }}'</h1>
+            <h3 class="subtitle">
             {% if amount2 == 1 %}
-            <h3 class="subtitle">{{ amount2 }} recipe found</h3>
+            1 recipe found,
             {% else %}
-            <h3 class="subtitle">{{ amount2 }} recipes found</h3>
+            {{ amount2 }} recipes found,
             {% endif %}
+            {% if profiles|length == 1 %}
+            1 profile found
+            {% else %}
+            {{ profiles|length }} profiles found
+            {% endif %}
+            </h3>
         </div>
     </section>
     <body>

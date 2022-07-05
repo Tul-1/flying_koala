@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
+
     try:
         s = request.GET['send']
     except:
@@ -35,9 +36,18 @@ def insert_ingredient(ing):
 def send(request):
     logged_user = request.user
 
-    logged_user.userrecipedata.amount = logged_user.userrecipedata.amount + 1
+    try:
+        current_amount = logged_user.userrecipedata.amount
+        logged_user.userrecipedata.delete()
+    except:
+        current_amount = 0
 
-    print(logged_user.userrecipedata.amount)
+    new_data = UserRecipeData(user=logged_user, amount=current_amount + 1)
+    new_data.save()
+
+    #logged_user.userrecipedata.amount + 1
+
+    #print(logged_user.userrecipedata.amount)
 
     try:
         name = request.POST['name_txt']
@@ -47,6 +57,7 @@ def send(request):
         ingredients = request.POST['ingredients']
         prep = request.POST['prep']
         cuisine = request.POST['cuisine']
+        image = request.FILES['userimage']
     except:
         return redirect('/?send=fail')
 
@@ -56,7 +67,7 @@ def send(request):
     ingredients = ingredients.split('\n')
     ingredients = [i.split(' ', maxsplit=1) for i in ingredients]
 
-    r = Recipe(cuisine=cuisine, recipe_name=name, description=description, serves=serves, steps=steps, pub_date=timezone.now(), username=logged_user.username, user=logged_user, prep_time=prep)
+    r = Recipe(photo=image, cuisine=cuisine, recipe_name=name, description=description, serves=serves, steps=steps, pub_date=timezone.now(), username=logged_user.username, user=logged_user, prep_time=prep)
     r.save()
 
     for i in ingredients:
@@ -188,11 +199,21 @@ def search(request):
 
     results.sort(key=getLikeNum, reverse=True)
 
+    results3 = []
     for keyword in keyword_list:
-        results3 = list(User.objects.filter(username__icontains=keyword))
+        results3 += list(User.objects.filter(username__icontains=keyword))
 
     context = {'recipes':results, 'keywords':keywords, 'profiles':results3, 'amount2':len(results), 'amount':len(Recipe.objects.filter(username=request.user.username))}
     return render(request, 'search_results.html', context)
+
+def updatelog(request):
+    logged_user = request.user
+
+    if not logged_user.is_staff:
+        raise Http404('User not matched')
+
+    return render(request, 'updatelog.html')
+
 
 @login_required(login_url='/signin/')
 def delete(request):
@@ -201,7 +222,7 @@ def delete(request):
     recipe_req_id = request.GET['id']
     recipe_req = get_object_or_404(Recipe, pk=recipe_req_id)
 
-    if recipe_req.username != logged_user.username:
+    if recipe_req.username != logged_user.username and not logged_user.is_staff:
         raise Http404('User not matched')
     
     recipe_req.delete()

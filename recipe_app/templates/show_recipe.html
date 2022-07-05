@@ -37,6 +37,9 @@
         </div>
 
         <div class="content">
+        <figure class="image is-128x128">
+        <img src="{{recipe_req.photo.url}}" alt="recipe_image">
+        </figure>
             <h3>Ingredients:</h3>
             {% for ing in ings %}
             <input type="checkbox">&nbsp;{{ ing }}<br>
@@ -47,6 +50,7 @@
             {% endfor %}
         </div>
     </section>
+    
 
     <section class="section">
         <div class="field is-grouped">
@@ -63,8 +67,8 @@
                 {% endif %}
                 ({{ recipe_req.like_number }})
             </a></p>
-            {% if request.user.username == recipe_req.username %}
-            <p class="control"><a class="button is-danger"href='/delete?id={{ recipe_req.id }}'>Delete</a></p>
+            {% if request.user.username == recipe_req.username or request.user.is_staff %}
+            <p class="control"><a class="button is-danger"href='/delete?id={{ recipe_req.id }}'>Delete{% if request.user.is_staff %}<strong>&nbsp(Mod)</strong>{% endif %}</a></p>
             {% endif %}
             <p class="control"><a href='/' class="button">Homepage</a></p>
         </div>
